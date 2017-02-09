@@ -31,7 +31,7 @@ class App extends React.Component {
             <button onClick={this.open}>open</button>
             <button onClick={this.close}>close</button>
             <div className="loading">
-                <ShLoading shToggleSpinner={this.state.show} shLabel={'Loading'} shClass={'monkey'} shKey{'prospect-list-api-call'}/>
+                <ShLoading shToggleSpinner={this.state.show} shLabel={'Loading'} shClass={'monkey'} shKey={'prospect-list-api-call'}/>
             </div>
         </div>
     }
