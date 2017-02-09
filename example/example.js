@@ -59,9 +59,9 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _shSpinner = __webpack_require__(/*! ../bin/sh-spinner */ 178);
+	var _shLoadingTimmer = __webpack_require__(/*! ../src/sh-loading-timmer */ 178);
 	
-	var _shSpinner2 = _interopRequireDefault(_shSpinner);
+	var _shLoadingTimmer2 = _interopRequireDefault(_shLoadingTimmer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -74,19 +74,55 @@
 	var App = function (_React$Component) {
 	    _inherits(App, _React$Component);
 	
-	    function App() {
+	    function App(props) {
 	        _classCallCheck(this, App);
 	
-	        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	
+	        _this.state = {
+	            show: false
+	        };
+	
+	        _this.open = _this.open.bind(_this);
+	        _this.close = _this.close.bind(_this);
+	        return _this;
 	    }
 	
 	    _createClass(App, [{
+	        key: 'open',
+	        value: function open() {
+	            this.setState({
+	                show: true
+	            });
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.setState({
+	                show: false
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'container' },
-	                _react2.default.createElement(_shSpinner2.default, { label: 'Loading...' })
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.open },
+	                    'open'
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.close },
+	                    'close'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'loading' },
+	                    _react2.default.createElement(_shLoadingTimmer2.default, { shToggleSpinner: this.state.show, shLabel: 'Loading', shClass: 'monkey' })
+	                )
 	            );
 	        }
 	    }]);
@@ -22029,651 +22065,143 @@
 
 /***/ },
 /* 178 */
-/*!***************************!*\
-  !*** ./bin/sh-spinner.js ***!
-  \***************************/
+/*!**********************************!*\
+  !*** ./src/sh-loading-timmer.js ***!
+  \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+	'use strict';
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	(function webpackUniversalModuleDefinition(root, factory) {
-		if (( false ? 'undefined' : _typeof(exports)) === 'object' && ( false ? 'undefined' : _typeof(module)) === 'object') module.exports = factory(__webpack_require__(/*! react */ 1), __webpack_require__(/*! lodash */ 180));else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! react */ 1), __webpack_require__(/*! lodash */ 180)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') exports["sh-spinner"] = factory(require("react"), require("lodash"));else root["sh-spinner"] = factory(root["React"], root["_"]);
-	})(undefined, function (__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
-		return (/******/function (modules) {
-				// webpackBootstrap
-				/******/ // The module cache
-				/******/var installedModules = {};
-				/******/
-				/******/ // The require function
-				/******/function __webpack_require__(moduleId) {
-					/******/
-					/******/ // Check if module is in cache
-					/******/if (installedModules[moduleId])
-						/******/return installedModules[moduleId].exports;
-					/******/
-					/******/ // Create a new module (and put it into the cache)
-					/******/var module = installedModules[moduleId] = {
-						/******/exports: {},
-						/******/id: moduleId,
-						/******/loaded: false
-						/******/ };
-					/******/
-					/******/ // Execute the module function
-					/******/modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-					/******/
-					/******/ // Flag the module as loaded
-					/******/module.loaded = true;
-					/******/
-					/******/ // Return the exports of the module
-					/******/return module.exports;
-					/******/
-				}
-				/******/
-				/******/
-				/******/ // expose the modules object (__webpack_modules__)
-				/******/__webpack_require__.m = modules;
-				/******/
-				/******/ // expose the module cache
-				/******/__webpack_require__.c = installedModules;
-				/******/
-				/******/ // __webpack_public_path__
-				/******/__webpack_require__.p = "";
-				/******/
-				/******/ // Load entry module and return exports
-				/******/return __webpack_require__(0);
-				/******/
-			}(
-			/************************************************************************/
-			/******/[
-			/* 0 */
-			/*!***************************!*\
-	    !*** ./src/sh-spinner.js ***!
-	    \***************************/
-			/***/function (module, exports, __webpack_require__) {
-	
-				'use strict';
-	
-				Object.defineProperty(exports, "__esModule", {
-					value: true
-				});
-	
-				var _extends = Object.assign || function (target) {
-					for (var i = 1; i < arguments.length; i++) {
-						var source = arguments[i];for (var key in source) {
-							if (Object.prototype.hasOwnProperty.call(source, key)) {
-								target[key] = source[key];
-							}
-						}
-					}return target;
-				};
-	
-				var _createClass = function () {
-					function defineProperties(target, props) {
-						for (var i = 0; i < props.length; i++) {
-							var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-						}
-					}return function (Constructor, protoProps, staticProps) {
-						if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-					};
-				}();
-	
-				var _react = __webpack_require__( /*! react */1);
-	
-				var _react2 = _interopRequireDefault(_react);
-	
-				var _lodash = __webpack_require__( /*! lodash */2);
-	
-				var _ = _interopRequireWildcard(_lodash);
-	
-				__webpack_require__( /*! ./sh-spinner.scss */3);
-	
-				function _interopRequireWildcard(obj) {
-					if (obj && obj.__esModule) {
-						return obj;
-					} else {
-						var newObj = {};if (obj != null) {
-							for (var key in obj) {
-								if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
-							}
-						}newObj.default = obj;return newObj;
-					}
-				}
-	
-				function _interopRequireDefault(obj) {
-					return obj && obj.__esModule ? obj : { default: obj };
-				}
-	
-				function _objectWithoutProperties(obj, keys) {
-					var target = {};for (var i in obj) {
-						if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
-					}return target;
-				}
-	
-				function _classCallCheck(instance, Constructor) {
-					if (!(instance instanceof Constructor)) {
-						throw new TypeError("Cannot call a class as a function");
-					}
-				}
-	
-				function _possibleConstructorReturn(self, call) {
-					if (!self) {
-						throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-					}return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-				}
-	
-				function _inherits(subClass, superClass) {
-					if (typeof superClass !== "function" && superClass !== null) {
-						throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
-					}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-				}
-	
-				var ShSpinner = function (_React$Component) {
-					_inherits(ShSpinner, _React$Component);
-	
-					function ShSpinner(props) {
-						_classCallCheck(this, ShSpinner);
-	
-						var _this = _possibleConstructorReturn(this, (ShSpinner.__proto__ || Object.getPrototypeOf(ShSpinner)).call(this, props));
-	
-						_this.size = 100;
-						_this.state = {
-							classList: { shShowSpinner: false }
-						};
-	
-						_this.componentDidMount = _this.componentDidMount.bind(_this);
-						return _this;
-					}
-	
-					_createClass(ShSpinner, [{
-						key: 'startLoading',
-						value: function startLoading(size) {
-							var _this2 = this;
-	
-							var netSize = size - 10;
-							var half = netSize / 2;
-							var svg = void 0;
-							var path = void 0;
-							var setupSvg = function setupSvg() {
-								return Promise.resolve().then(function () {
-									var bck = _this2.refs.shLoaderBck;
-									var crcx = size / 2;
-									var r = size / 2 - 5;
-	
-									bck.setAttribute('cx', crcx);
-									bck.setAttribute('cy', crcx);
-									bck.setAttribute('r', r);
-	
-									svg = _this2.refs.svg;
-									path = _this2.refs.shLoaderPath;
-									svg.setAttribute('size', size);
-									svg.setAttribute('height', size);
-									svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
-									path.setAttribute('transform', 'translate(' + size / 2 + ',' + size / 2 + ')');
-									return path;
-								});
-							};
-	
-							setupSvg().then(function (path) {
-								var loader = path,
-								    start = 0,
-								    pie = Math.PI,
-								    speed = 30;
-	
-								var draw = function draw() {
-									start++;
-	
-									start %= 360;
-									var r = start * pie / 180,
-									    x = Math.sin(r) * half + ' ',
-									    y = Math.cos(r) * -half + ' ',
-									    M = 'M',
-									    GoTo = '0 ' + -half + ' ',
-									    A = 'A ',
-									    xRadius = half + ' ',
-									    yRadius = half + ' ',
-									    xAxsisRotation = '1 ',
-									    sweep = '1 ',
-									    largeArcSweep = start > 180 ? 1 : 0 + ' ',
-									    ArcOne = A + xRadius + yRadius + xAxsisRotation + largeArcSweep + sweep + x + y;
-	
-									var d = M + GoTo + ArcOne;
-	
-									loader.setAttribute('d', d);
-									setTimeout(draw, speed); // Redraw
-								};
-	
-								draw();
-							});
-						}
-					}, {
-						key: 'componentDidMount',
-						value: function componentDidMount() {
-							var box = this.refs.shLoader.getBoundingClientRect();
-							this.size = _.min([box.height, box.width]);
-							this.startLoading(this.size);
-						}
-					}, {
-						key: 'render',
-						value: function render() {
-							var other = _objectWithoutProperties(this.props, []);
-	
-							return _react2.default.createElement('div', _extends({ className: 'sh-loader', ref: 'shLoader' }, other), _react2.default.createElement('svg', { ref: 'svg', className: 'sh-loader-svg' }, _react2.default.createElement('path', { ref: 'shLoaderPath', className: 'sh-loader-path' }), _react2.default.createElement('circle', { ref: 'shLoaderBck', cx: '100', cy: '100', r: '100', className: 'sh-loader-bck' })), _react2.default.createElement('svg', { ref: 'svgBck', className: 'sh-loader-svg' }), _react2.default.createElement('div', { className: 'sh-loader-text' }, _react2.default.createElement('div', { className: 'sh-label' }, this.props.label)));
-						}
-					}]);
-	
-					return ShSpinner;
-				}(_react2.default.Component);
-	
-				ShSpinner.propTypes = {
-					label: _react2.default.PropTypes.string
-				};
-	
-				exports.default = ShSpinner;
-	
-				/***/
-			},
-			/* 1 */
-			/*!**************************************************************************************!*\
-	    !*** external {"root":"React","commonjs2":"react","commonjs":"react","amd":"react"} ***!
-	    \**************************************************************************************/
-			/***/function (module, exports) {
-	
-				module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
-	
-				/***/
-			},
-			/* 2 */
-			/*!*************************************************************************************!*\
-	    !*** external {"root":"_","commonjs2":"lodash","commonjs":"lodash","amd":"lodash"} ***!
-	    \*************************************************************************************/
-			/***/function (module, exports) {
-	
-				module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
-	
-				/***/
-			},
-			/* 3 */
-			/*!*****************************!*\
-	    !*** ./src/sh-spinner.scss ***!
-	    \*****************************/
-			/***/function (module, exports, __webpack_require__) {
-	
-				// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-				// load the styles
-				var content = __webpack_require__( /*! !./../~/css-loader!./../~/sass-loader!./sh-spinner.scss */4);
-				if (typeof content === 'string') content = [[module.id, content, '']];
-				// add the styles to the DOM
-				var update = __webpack_require__( /*! ./../~/style-loader/addStyles.js */6)(content, {});
-				if (content.locals) module.exports = content.locals;
-				// Hot Module Replacement
-				if (false) {
-					// When the styles change, update the <style> tags
-					if (!content.locals) {
-						module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./sh-spinner.scss", function () {
-							var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./sh-spinner.scss");
-							if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-							update(newContent);
-						});
-					}
-					// When the module is disposed, remove the <style> tags
-					module.hot.dispose(function () {
-						update();
-					});
-				}
-	
-				/***/
-			},
-			/* 4 */
-			/*!************************************************************!*\
-	    !*** ./~/css-loader!./~/sass-loader!./src/sh-spinner.scss ***!
-	    \************************************************************/
-			/***/function (module, exports, __webpack_require__) {
-	
-				exports = module.exports = __webpack_require__( /*! ./../~/css-loader/lib/css-base.js */5)();
-				// imports
-	
-	
-				// module
-				exports.push([module.id, ".sh-loader {\n  position: relative;\n  width: 100%;\n  height: 100%; }\n  .sh-loader .sh-loader-svg {\n    display: block; }\n  .sh-loader .sh-loader-path {\n    stroke: #3ab676;\n    stroke-opacity: 1;\n    stroke-width: 5px;\n    fill: none; }\n  .sh-loader .sh-loader-bck {\n    stroke: rgba(255, 255, 255, 0.1);\n    stroke-width: 5px;\n    fill: none; }\n  .sh-loader .sh-loader-text {\n    display: flex;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    color: white;\n    top: 0;\n    justify-content: center;\n    align-items: center; }\n    .sh-loader .sh-loader-text .sh-label {\n      font-family: \"Roboto\", \"Open Sans\";\n      text-align: center;\n      font-weight: 100;\n      white-space: nowrap;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n", ""]);
-	
-				// exports
-	
-	
-				/***/
-			},
-			/* 5 */
-			/*!**************************************!*\
-	    !*** ./~/css-loader/lib/css-base.js ***!
-	    \**************************************/
-			/***/function (module, exports) {
-	
-				/*
-	   	MIT License http://www.opensource.org/licenses/mit-license.php
-	   	Author Tobias Koppers @sokra
-	   */
-				// css base code, injected by the css-loader
-				module.exports = function () {
-					var list = [];
-	
-					// return the list of modules as css string
-					list.toString = function toString() {
-						var result = [];
-						for (var i = 0; i < this.length; i++) {
-							var item = this[i];
-							if (item[2]) {
-								result.push("@media " + item[2] + "{" + item[1] + "}");
-							} else {
-								result.push(item[1]);
-							}
-						}
-						return result.join("");
-					};
-	
-					// import a list of modules into the list
-					list.i = function (modules, mediaQuery) {
-						if (typeof modules === "string") modules = [[null, modules, ""]];
-						var alreadyImportedModules = {};
-						for (var i = 0; i < this.length; i++) {
-							var id = this[i][0];
-							if (typeof id === "number") alreadyImportedModules[id] = true;
-						}
-						for (i = 0; i < modules.length; i++) {
-							var item = modules[i];
-							// skip already imported module
-							// this implementation is not 100% perfect for weird media query combinations
-							//  when a module is imported multiple times with different media queries.
-							//  I hope this will never occur (Hey this way we have smaller bundles)
-							if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-								if (mediaQuery && !item[2]) {
-									item[2] = mediaQuery;
-								} else if (mediaQuery) {
-									item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-								}
-								list.push(item);
-							}
-						}
-					};
-					return list;
-				};
-	
-				/***/
-			},
-			/* 6 */
-			/*!*************************************!*\
-	    !*** ./~/style-loader/addStyles.js ***!
-	    \*************************************/
-			/***/function (module, exports, __webpack_require__) {
-	
-				/*
-	   	MIT License http://www.opensource.org/licenses/mit-license.php
-	   	Author Tobias Koppers @sokra
-	   */
-				var stylesInDom = {},
-				    memoize = function memoize(fn) {
-					var memo;
-					return function () {
-						if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-						return memo;
-					};
-				},
-				    isOldIE = memoize(function () {
-					return (/msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase())
-					);
-				}),
-				    getHeadElement = memoize(function () {
-					return document.head || document.getElementsByTagName("head")[0];
-				}),
-				    singletonElement = null,
-				    singletonCounter = 0,
-				    styleElementsInsertedAtTop = [];
-	
-				module.exports = function (list, options) {
-					if (true) {
-						if ((typeof document === 'undefined' ? 'undefined' : _typeof(document)) !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-					}
-	
-					options = options || {};
-					// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-					// tags it will allow on a page
-					if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-	
-					// By default, add <style> tags to the bottom of <head>.
-					if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-	
-					var styles = listToStyles(list);
-					addStylesToDom(styles, options);
-	
-					return function update(newList) {
-						var mayRemove = [];
-						for (var i = 0; i < styles.length; i++) {
-							var item = styles[i];
-							var domStyle = stylesInDom[item.id];
-							domStyle.refs--;
-							mayRemove.push(domStyle);
-						}
-						if (newList) {
-							var newStyles = listToStyles(newList);
-							addStylesToDom(newStyles, options);
-						}
-						for (var i = 0; i < mayRemove.length; i++) {
-							var domStyle = mayRemove[i];
-							if (domStyle.refs === 0) {
-								for (var j = 0; j < domStyle.parts.length; j++) {
-									domStyle.parts[j]();
-								}delete stylesInDom[domStyle.id];
-							}
-						}
-					};
-				};
-	
-				function addStylesToDom(styles, options) {
-					for (var i = 0; i < styles.length; i++) {
-						var item = styles[i];
-						var domStyle = stylesInDom[item.id];
-						if (domStyle) {
-							domStyle.refs++;
-							for (var j = 0; j < domStyle.parts.length; j++) {
-								domStyle.parts[j](item.parts[j]);
-							}
-							for (; j < item.parts.length; j++) {
-								domStyle.parts.push(addStyle(item.parts[j], options));
-							}
-						} else {
-							var parts = [];
-							for (var j = 0; j < item.parts.length; j++) {
-								parts.push(addStyle(item.parts[j], options));
-							}
-							stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts };
-						}
-					}
-				}
-	
-				function listToStyles(list) {
-					var styles = [];
-					var newStyles = {};
-					for (var i = 0; i < list.length; i++) {
-						var item = list[i];
-						var id = item[0];
-						var css = item[1];
-						var media = item[2];
-						var sourceMap = item[3];
-						var part = { css: css, media: media, sourceMap: sourceMap };
-						if (!newStyles[id]) styles.push(newStyles[id] = { id: id, parts: [part] });else newStyles[id].parts.push(part);
-					}
-					return styles;
-				}
-	
-				function insertStyleElement(options, styleElement) {
-					var head = getHeadElement();
-					var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-					if (options.insertAt === "top") {
-						if (!lastStyleElementInsertedAtTop) {
-							head.insertBefore(styleElement, head.firstChild);
-						} else if (lastStyleElementInsertedAtTop.nextSibling) {
-							head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-						} else {
-							head.appendChild(styleElement);
-						}
-						styleElementsInsertedAtTop.push(styleElement);
-					} else if (options.insertAt === "bottom") {
-						head.appendChild(styleElement);
-					} else {
-						throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-					}
-				}
-	
-				function removeStyleElement(styleElement) {
-					styleElement.parentNode.removeChild(styleElement);
-					var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-					if (idx >= 0) {
-						styleElementsInsertedAtTop.splice(idx, 1);
-					}
-				}
-	
-				function createStyleElement(options) {
-					var styleElement = document.createElement("style");
-					styleElement.type = "text/css";
-					insertStyleElement(options, styleElement);
-					return styleElement;
-				}
-	
-				function createLinkElement(options) {
-					var linkElement = document.createElement("link");
-					linkElement.rel = "stylesheet";
-					insertStyleElement(options, linkElement);
-					return linkElement;
-				}
-	
-				function addStyle(obj, options) {
-					var styleElement, update, remove;
-	
-					if (options.singleton) {
-						var styleIndex = singletonCounter++;
-						styleElement = singletonElement || (singletonElement = createStyleElement(options));
-						update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-						remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-					} else if (obj.sourceMap && typeof URL === "function" && typeof URL.createObjectURL === "function" && typeof URL.revokeObjectURL === "function" && typeof Blob === "function" && typeof btoa === "function") {
-						styleElement = createLinkElement(options);
-						update = updateLink.bind(null, styleElement);
-						remove = function remove() {
-							removeStyleElement(styleElement);
-							if (styleElement.href) URL.revokeObjectURL(styleElement.href);
-						};
-					} else {
-						styleElement = createStyleElement(options);
-						update = applyToTag.bind(null, styleElement);
-						remove = function remove() {
-							removeStyleElement(styleElement);
-						};
-					}
-	
-					update(obj);
-	
-					return function updateStyle(newObj) {
-						if (newObj) {
-							if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) return;
-							update(obj = newObj);
-						} else {
-							remove();
-						}
-					};
-				}
-	
-				var replaceText = function () {
-					var textStore = [];
-	
-					return function (index, replacement) {
-						textStore[index] = replacement;
-						return textStore.filter(Boolean).join('\n');
-					};
-				}();
-	
-				function applyToSingletonTag(styleElement, index, remove, obj) {
-					var css = remove ? "" : obj.css;
-	
-					if (styleElement.styleSheet) {
-						styleElement.styleSheet.cssText = replaceText(index, css);
-					} else {
-						var cssNode = document.createTextNode(css);
-						var childNodes = styleElement.childNodes;
-						if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-						if (childNodes.length) {
-							styleElement.insertBefore(cssNode, childNodes[index]);
-						} else {
-							styleElement.appendChild(cssNode);
-						}
-					}
-				}
-	
-				function applyToTag(styleElement, obj) {
-					var css = obj.css;
-					var media = obj.media;
-	
-					if (media) {
-						styleElement.setAttribute("media", media);
-					}
-	
-					if (styleElement.styleSheet) {
-						styleElement.styleSheet.cssText = css;
-					} else {
-						while (styleElement.firstChild) {
-							styleElement.removeChild(styleElement.firstChild);
-						}
-						styleElement.appendChild(document.createTextNode(css));
-					}
-				}
-	
-				function updateLink(linkElement, obj) {
-					var css = obj.css;
-					var sourceMap = obj.sourceMap;
-	
-					if (sourceMap) {
-						// http://stackoverflow.com/a/26603875
-						css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-					}
-	
-					var blob = new Blob([css], { type: "text/css" });
-	
-					var oldSrc = linkElement.href;
-	
-					linkElement.href = URL.createObjectURL(blob);
-	
-					if (oldSrc) URL.revokeObjectURL(oldSrc);
-				}
-	
-				/***/
-			}
-			/******/])
-		);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
 	});
-	;
-	//# sourceMappingURL=sh-spinner.js.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../~/webpack/buildin/module.js */ 179)(module)))
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(/*! ./sh-spinner.scss */ 181);
+	
+	var _shSpinner = __webpack_require__(/*! ./sh-spinner */ 185);
+	
+	var _shSpinner2 = _interopRequireDefault(_shSpinner);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var LoadingTimer = function (_React$Component) {
+	    _inherits(LoadingTimer, _React$Component);
+	
+	    function LoadingTimer(props) {
+	        _classCallCheck(this, LoadingTimer);
+	
+	        var _this = _possibleConstructorReturn(this, (LoadingTimer.__proto__ || Object.getPrototypeOf(LoadingTimer)).call(this, props));
+	
+	        _this.timeDiff = null;
+	        _this.timeNow = null;
+	        _this.state = {
+	            show: false,
+	            timer: 3000,
+	            closing: false
+	        };
+	
+	        _this.open = _this.open.bind(_this);
+	        _this.close = _this.close.bind(_this);
+	        _this.componentWillReceiveProps = _this.componentWillReceiveProps.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(LoadingTimer, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(props) {
+	            if (props.shToggleSpinner) {
+	                this.open();
+	            }
+	
+	            if (!props.shToggleSpinner) {
+	                this.close();
+	            }
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            var timer = 3000;
+	            this.timeNow = Date.now();
+	
+	            if (typeof Storage !== 'undefined') {
+	                if (localStorage.getItem('timer') === null) {
+	                    localStorage.setItem('timer', timer);
+	                } else {
+	                    timer = localStorage.getItem('timer');
+	                }
+	            } else {
+	                console.error('storage unusable no load times will be saved');
+	            }
+	
+	            this.setState({ show: true });
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            var _this2 = this;
+	
+	            this.setState({
+	                closing: true
+	            }, function () {
+	                setTimeout(function () {
+	                    _this2.timeDiff = Date.now() - _this2.timeNow;
+	                    if (typeof Storage !== 'undefined') {
+	                        localStorage.setItem('timer', _this2.timeDiff);
+	                    } else {
+	                        console.error('storage unusable no load times will be saved');
+	                    }
+	
+	                    _this2.setState({
+	                        show: false,
+	                        timer: _this2.timeDiff
+	                    });
+	                }, 500);
+	            });
+	        }
+	    }, {
+	        key: 'spinner',
+	        value: function spinner() {
+	            if (this.state.show) {
+	                return _react2.default.createElement(_shSpinner2.default, { shLabel: this.props.shLabel, shTimer: this.state.timer, shClosing: this.state.closing });
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: this.props.shClass + ' sh-loader' },
+	                this.spinner()
+	            );
+	        }
+	    }]);
+	
+	    return LoadingTimer;
+	}(_react2.default.Component);
+	
+	LoadingTimer.propTypes = {
+	    shLabel: _react2.default.PropTypes.string,
+	    shClass: _react2.default.PropTypes.string,
+	    shToggleSpinner: _react2.default.PropTypes.bool,
+	    shComponentName: _react2.default.PropTypes.string
+	};
+	
+	exports.default = LoadingTimer;
 
 /***/ },
 /* 179 */
-/*!***********************************!*\
-  !*** (webpack)/buildin/module.js ***!
-  \***********************************/
-/***/ function(module, exports) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
-
-
-/***/ },
-/* 180 */
 /*!****************************!*\
   !*** ./~/lodash/lodash.js ***!
   \****************************/
@@ -39764,7 +39292,809 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../webpack/buildin/module.js */ 179)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../webpack/buildin/module.js */ 180)(module)))
+
+/***/ },
+/* 180 */
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
+/***/ function(module, exports) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 181 */
+/*!*****************************!*\
+  !*** ./src/sh-spinner.scss ***!
+  \*****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../~/css-loader!./../~/sass-loader!./sh-spinner.scss */ 182);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 184)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./sh-spinner.scss", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./sh-spinner.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 182 */
+/*!************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./src/sh-spinner.scss ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 183)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".sh-loader {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  opacity: 1; }\n  .sh-loader .sh-loader-svg {\n    display: block; }\n  .sh-loader .sh-loader-path {\n    stroke-opacity: 1;\n    stroke-width: 5px;\n    fill: none; }\n  .sh-loader .sh-loader-bck {\n    stroke: rgba(255, 255, 255, 0.1);\n    stroke-width: 5px;\n    fill: none; }\n  .sh-loader .sh-loader-svgs {\n    width: 100%;\n    height: 100%;\n    opacity: 0;\n    transition: opacity 0.5s ease-in-out; }\n    .sh-loader .sh-loader-svgs.sh-fade-in {\n      opacity: 1;\n      transition: opacity 0.5s ease-in-out; }\n    .sh-loader .sh-loader-svgs .sh-loader-text {\n      display: flex;\n      width: 100%;\n      height: 100%;\n      position: absolute;\n      color: white;\n      top: 0;\n      justify-content: center;\n      align-items: center; }\n      .sh-loader .sh-loader-svgs .sh-loader-text .sh-label {\n        font-family: \"Roboto\", \"Open Sans\";\n        text-align: center;\n        font-weight: 100;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis; }\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 183 */
+/*!**************************************!*\
+  !*** ./~/css-loader/lib/css-base.js ***!
+  \**************************************/
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+	
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+	
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 184 */
+/*!*************************************!*\
+  !*** ./~/style-loader/addStyles.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+	
+	module.exports = function(list, options) {
+		if(true) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+	
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+	
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+	
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+	
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+	
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+	
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+	
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+	
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+	
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+	
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+	
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+	
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+	
+		update(obj);
+	
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+	
+	var replaceText = (function () {
+		var textStore = [];
+	
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+	
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+	
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+	
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+	
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+	
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+	
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+	
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+	
+		var blob = new Blob([css], { type: "text/css" });
+	
+		var oldSrc = linkElement.href;
+	
+		linkElement.href = URL.createObjectURL(blob);
+	
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ },
+/* 185 */
+/*!***************************!*\
+  !*** ./src/sh-spinner.js ***!
+  \***************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _lodash = __webpack_require__(/*! lodash */ 179);
+	
+	var _ = _interopRequireWildcard(_lodash);
+	
+	var _shCore = __webpack_require__(/*! sh-core */ 186);
+	
+	var _shCore2 = _interopRequireDefault(_shCore);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ShSpinner = function (_React$Component) {
+	    _inherits(ShSpinner, _React$Component);
+	
+	    function ShSpinner(props) {
+	        _classCallCheck(this, ShSpinner);
+	
+	        var _this = _possibleConstructorReturn(this, (ShSpinner.__proto__ || Object.getPrototypeOf(ShSpinner)).call(this, props));
+	
+	        _this.size = 100;
+	
+	        _this.state = {
+	            timer: _this.props.shTimer,
+	            classList: {
+	                shLoaderSvgs: true,
+	                shFadeIn: false
+	            }
+	        };
+	
+	        _this.componentDidMount = _this.componentDidMount.bind(_this);
+	        _this.startLoading = _this.startLoading.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(ShSpinner, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(props) {
+	            if (props.shTimer != this.state.timer) {
+	                this.setState({
+	                    timer: props.shTimer
+	                });
+	            }
+	
+	            if (props.shClosing) {
+	                this.setState({
+	                    classList: {
+	                        shLoaderSvgs: true,
+	                        shFadeIn: false
+	                    }
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'startLoading',
+	        value: function startLoading(size) {
+	            var _this2 = this;
+	
+	            var netSize = size - 10;
+	            var half = netSize / 2;
+	            var svg = void 0;
+	            var path = void 0;
+	            var runCount = 0;
+	            var setupSvg = function setupSvg() {
+	                return Promise.resolve().then(function () {
+	                    var bck = _this2.refs.shLoaderBck;
+	                    var crcx = size / 2;
+	                    var r = size / 2 - 5;
+	
+	                    bck.setAttribute('cx', crcx);
+	                    bck.setAttribute('cy', crcx);
+	                    bck.setAttribute('r', r);
+	
+	                    svg = _this2.refs.svg;
+	                    path = _this2.refs.shLoaderPath;
+	                    svg.setAttribute('size', size);
+	                    svg.setAttribute('height', size);
+	                    svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+	                    path.setAttribute('transform', 'translate(' + size / 2 + ',' + size / 2 + ')');
+	                    path.setAttribute('stroke', '#3AB676');
+	                    return path;
+	                });
+	            };
+	
+	            setupSvg().then(function (path) {
+	                var loader = path,
+	                    start = 0,
+	                    pie = Math.PI,
+	                    speed = _this2.props.shTimer / 360;
+	
+	                var draw = function draw() {
+	                    start++;
+	                    if (start % 360 === 359) {
+	                        runCount++;
+	                    }
+	
+	                    if (runCount === 1) {
+	                        path.setAttribute('stroke', '#E78F2B');
+	                    }
+	                    if (runCount >= 2) {
+	                        path.setAttribute('stroke', '#B25245');
+	                    }
+	
+	                    start %= 360;
+	                    var r = start * pie / 180,
+	                        x = Math.sin(r) * half + ' ',
+	                        y = Math.cos(r) * -half + ' ',
+	                        M = 'M',
+	                        GoTo = '0 ' + -half + ' ',
+	                        A = 'A ',
+	                        xRadius = half + ' ',
+	                        yRadius = half + ' ',
+	                        xAxsisRotation = '1 ',
+	                        sweep = '1 ',
+	                        largeArcSweep = start > 180 ? 1 : 0 + ' ',
+	                        ArcOne = A + xRadius + yRadius + xAxsisRotation + largeArcSweep + sweep + x + y;
+	
+	                    var d = M + GoTo + ArcOne;
+	
+	                    loader.setAttribute('d', d);
+	                    setTimeout(draw, speed); // Redraw
+	                };
+	
+	                draw();
+	            });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this3 = this;
+	
+	            var box = this.refs.shLoader.getBoundingClientRect();
+	            this.size = _.min([box.height, box.width]);
+	            this.startLoading(this.size);
+	
+	            setTimeout(function () {
+	                _this3.setState({
+	                    classList: {
+	                        shLoaderSvgs: true,
+	                        shFadeIn: true
+	                    }
+	                });
+	            }, 100);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { ref: 'shLoader', className: _shCore2.default.getClassNames(this.state.classList) },
+	                _react2.default.createElement(
+	                    'svg',
+	                    { ref: 'svg', className: 'sh-loader-svg' },
+	                    _react2.default.createElement('path', { ref: 'shLoaderPath', className: 'sh-loader-path' }),
+	                    _react2.default.createElement('circle', { ref: 'shLoaderBck', cx: '100', cy: '100', r: '100', className: 'sh-loader-bck' })
+	                ),
+	                _react2.default.createElement('svg', { ref: 'svgBck', className: 'sh-loader-svg' }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'sh-loader-text' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'sh-label' },
+	                        this.props.shLabel
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return ShSpinner;
+	}(_react2.default.Component);
+	
+	ShSpinner.propTypes = {
+	    shLabel: _react2.default.PropTypes.string,
+	    shTimer: _react2.default.PropTypes.number,
+	    shSuccess: _react2.default.PropTypes.func
+	};
+	
+	exports.default = ShSpinner;
+
+/***/ },
+/* 186 */
+/*!**********************************!*\
+  !*** ./~/sh-core/bin/sh-core.js ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	(function webpackUniversalModuleDefinition(root, factory) {
+		if(true)
+			module.exports = factory(__webpack_require__(/*! lodash */ 179));
+		else if(typeof define === 'function' && define.amd)
+			define(["lodash"], factory);
+		else if(typeof exports === 'object')
+			exports["sh-core"] = factory(require("lodash"));
+		else
+			root["sh-core"] = factory(root["_"]);
+	})(this, function(__WEBPACK_EXTERNAL_MODULE_2__) {
+	return /******/ (function(modules) { // webpackBootstrap
+	/******/ 	// The module cache
+	/******/ 	var installedModules = {};
+	/******/
+	/******/ 	// The require function
+	/******/ 	function __webpack_require__(moduleId) {
+	/******/
+	/******/ 		// Check if module is in cache
+	/******/ 		if(installedModules[moduleId])
+	/******/ 			return installedModules[moduleId].exports;
+	/******/
+	/******/ 		// Create a new module (and put it into the cache)
+	/******/ 		var module = installedModules[moduleId] = {
+	/******/ 			exports: {},
+	/******/ 			id: moduleId,
+	/******/ 			loaded: false
+	/******/ 		};
+	/******/
+	/******/ 		// Execute the module function
+	/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+	/******/
+	/******/ 		// Flag the module as loaded
+	/******/ 		module.loaded = true;
+	/******/
+	/******/ 		// Return the exports of the module
+	/******/ 		return module.exports;
+	/******/ 	}
+	/******/
+	/******/
+	/******/ 	// expose the modules object (__webpack_modules__)
+	/******/ 	__webpack_require__.m = modules;
+	/******/
+	/******/ 	// expose the module cache
+	/******/ 	__webpack_require__.c = installedModules;
+	/******/
+	/******/ 	// __webpack_public_path__
+	/******/ 	__webpack_require__.p = "";
+	/******/
+	/******/ 	// Load entry module and return exports
+	/******/ 	return __webpack_require__(0);
+	/******/ })
+	/************************************************************************/
+	/******/ ([
+	/* 0 */
+	/*!**********************!*\
+	  !*** ./src/index.js ***!
+	  \**********************/
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		exports.getDecimal = exports.getClassNames = undefined;
+		
+		var _getClassNames = __webpack_require__(/*! ./util/get-class-names */ 1);
+		
+		var _getClassNames2 = _interopRequireDefault(_getClassNames);
+		
+		var _getDecimal = __webpack_require__(/*! ./util/get-decimal */ 3);
+		
+		var _getDecimal2 = _interopRequireDefault(_getDecimal);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		exports.getClassNames = _getClassNames2.default;
+		exports.getDecimal = _getDecimal2.default;
+		exports.default = {
+		    getClassNames: _getClassNames2.default,
+		    getDecimal: _getDecimal2.default
+		};
+	
+	/***/ },
+	/* 1 */
+	/*!*************************************!*\
+	  !*** ./src/util/get-class-names.js ***!
+	  \*************************************/
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _lodash = __webpack_require__(/*! lodash */ 2);
+		
+		var _ = _interopRequireWildcard(_lodash);
+		
+		function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+		
+		/**
+		 * Get a string of classNames from the object passed in. Uses the keys for class names and only adds them if the value is true. Value of keys can be boolean, function, or strings. Functions are evaluated on call. Strings are appended to end of key.
+		 *
+		 * @param {object} classObject Object containing keys of class names.
+		 * @returns {string}
+		 */
+		function getClassNames(classObject) {
+		    var classNames = [];
+		
+		    for (var key in classObject) {
+		        if (classObject.hasOwnProperty(key)) {
+		            var check = classObject[key];
+		            var className = _.kebabCase(key);
+		            if (_.isFunction(check)) {
+		                if (check()) {
+		                    classNames.push(className);
+		                }
+		            } else if (_.isString(check)) {
+		                if (className === 'include' || _.includes(check, ' ')) {
+		                    classNames = _.concat(classNames, check.split(' '));
+		                } else {
+		                    classNames.push(className + '-' + _.kebabCase(check));
+		                }
+		            } else if (check) {
+		                classNames.push(className);
+		            }
+		        }
+		    }
+		
+		    classNames = _.uniq(classNames);
+		
+		    return classNames.join(' ');
+		}
+		
+		exports.default = getClassNames;
+	
+	/***/ },
+	/* 2 */
+	/*!*************************************************************************************!*\
+	  !*** external {"root":"_","commonjs2":"lodash","commonjs":"lodash","amd":"lodash"} ***!
+	  \*************************************************************************************/
+	/***/ function(module, exports) {
+	
+		module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
+	
+	/***/ },
+	/* 3 */
+	/*!*********************************!*\
+	  !*** ./src/util/get-decimal.js ***!
+	  \*********************************/
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _lodash = __webpack_require__(/*! lodash */ 2);
+		
+		var _ = _interopRequireWildcard(_lodash);
+		
+		function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+		
+		/**
+		 * Get a decimal value from a string or number, remove any unnecessary characters.
+		 *
+		 * @param {string} value Alpha characters will be removed and a decimal will be returned. For example if you give it 'b.123' 0.123 will be returned.
+		 * @returns {number}
+		 */
+		
+		function getDecimal(value) {
+		    if (!value) {
+		        return 0;
+		    }
+		
+		    var num = value;
+		    if (!_.isNumber(value)) {
+		        var isNeg = '-' && _.includes(value, '-');
+		
+		        var regExp = '[^0-9.]';
+		        var numString = value.toString().replace(new RegExp(regExp, 'g'), '');
+		
+		        var numList = numString.split('.');
+		
+		        // numList will always have at least one value in array because we checked for an empty string earlier.
+		        numList[0] += '.';
+		        numString = numList.join('');
+		        num = parseFloat(numString);
+		
+		        if (!num) {
+		            num = 0;
+		        } else if (isNeg) {
+		            num *= -1;
+		        }
+		    }
+		
+		    return num;
+		}
+		
+		exports.default = getDecimal;
+	
+	/***/ }
+	/******/ ])
+	});
+	;
+	//# sourceMappingURL=sh-core.js.map
 
 /***/ }
 /******/ ]);
