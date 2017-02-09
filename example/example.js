@@ -22136,8 +22136,8 @@
 	            this.timeNow = Date.now();
 	
 	            if (typeof Storage !== 'undefined') {
-	                if (localStorage.getItem('timer') === null) {
-	                    localStorage.setItem('timer', timer);
+	                if (localStorage.getItem(this.props.shKey) === null) {
+	                    localStorage.setItem(this.props.shKey, timer);
 	                } else {
 	                    timer = localStorage.getItem('timer');
 	                }
@@ -22157,7 +22157,7 @@
 	                setTimeout(function () {
 	                    _this2.timeDiff = Date.now() - _this2.timeNow;
 	                    if (typeof Storage !== 'undefined') {
-	                        localStorage.setItem('timer', _this2.timeDiff);
+	                        localStorage.setItem(_this2.props.shKey, _this2.timeDiff);
 	                    } else {
 	                        console.error('storage unusable no load times will be saved');
 	                    }
@@ -22191,10 +22191,16 @@
 	}(_react2.default.Component);
 	
 	LoadingTimer.propTypes = {
+	    shKey: _react2.default.PropTypes.string,
 	    shLabel: _react2.default.PropTypes.string,
 	    shClass: _react2.default.PropTypes.string,
 	    shToggleSpinner: _react2.default.PropTypes.bool,
 	    shComponentName: _react2.default.PropTypes.string
+	};
+	
+	LoadingTimer.defaultProps = {
+	    shKey: 'sh-timer',
+	    shLabel: 'Loading...'
 	};
 	
 	exports.default = LoadingTimer;

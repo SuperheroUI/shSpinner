@@ -33,8 +33,8 @@ class LoadingTimer extends React.Component {
         this.timeNow = Date.now();
 
         if (typeof(Storage) !== 'undefined') {
-            if (localStorage.getItem('timer') === null) {
-                localStorage.setItem('timer', timer);
+            if (localStorage.getItem(this.props.shKey) === null) {
+                localStorage.setItem(this.props.shKey, timer);
             } else {
                 timer = localStorage.getItem('timer');
             }
@@ -51,7 +51,7 @@ class LoadingTimer extends React.Component {
             setTimeout(() => {
                 this.timeDiff = Date.now() - this.timeNow;
                 if (typeof(Storage) !== 'undefined') {
-                    localStorage.setItem('timer', this.timeDiff);
+                    localStorage.setItem(this.props.shKey, this.timeDiff);
                 } else {
                     console.error('storage unusable no load times will be saved')
                 }
@@ -80,10 +80,16 @@ class LoadingTimer extends React.Component {
 }
 
 LoadingTimer.propTypes = {
+    shKey: React.PropTypes.string,
     shLabel: React.PropTypes.string,
     shClass: React.PropTypes.string,
     shToggleSpinner: React.PropTypes.bool,
     shComponentName: React.PropTypes.string
+};
+
+LoadingTimer.defaultProps = {
+    shKey: 'sh-timer',
+    shLabel: 'Loading...',
 };
 
 export default LoadingTimer;
