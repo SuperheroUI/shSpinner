@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import ShLoading from '../src/sh-loading-timmer';
+import ShLoading from '../src/sh-spinner';
 
 
 class App extends React.Component {

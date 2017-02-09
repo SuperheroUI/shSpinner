@@ -59,9 +59,9 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _shLoadingTimmer = __webpack_require__(/*! ../src/sh-loading-timmer */ 178);
+	var _shSpinner = __webpack_require__(/*! ../src/sh-spinner */ 185);
 	
-	var _shLoadingTimmer2 = _interopRequireDefault(_shLoadingTimmer);
+	var _shSpinner2 = _interopRequireDefault(_shSpinner);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -121,7 +121,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'loading' },
-	                    _react2.default.createElement(_shLoadingTimmer2.default, { shToggleSpinner: this.state.show, shLabel: 'Loading', shClass: 'monkey' })
+	                    _react2.default.createElement(_shSpinner2.default, { shToggleSpinner: this.state.show, shLabel: 'Loading', shClass: 'monkey' })
 	                )
 	            );
 	        }
@@ -22064,143 +22064,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../process/browser.js */ 3)))
 
 /***/ },
-/* 178 */
-/*!**********************************!*\
-  !*** ./src/sh-loading-timmer.js ***!
-  \**********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(/*! ./sh-spinner.scss */ 181);
-	
-	var _shSpinner = __webpack_require__(/*! ./sh-spinner */ 185);
-	
-	var _shSpinner2 = _interopRequireDefault(_shSpinner);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var LoadingTimer = function (_React$Component) {
-	    _inherits(LoadingTimer, _React$Component);
-	
-	    function LoadingTimer(props) {
-	        _classCallCheck(this, LoadingTimer);
-	
-	        var _this = _possibleConstructorReturn(this, (LoadingTimer.__proto__ || Object.getPrototypeOf(LoadingTimer)).call(this, props));
-	
-	        _this.timeDiff = null;
-	        _this.timeNow = null;
-	        _this.state = {
-	            show: false,
-	            timer: 3000,
-	            closing: false
-	        };
-	
-	        _this.open = _this.open.bind(_this);
-	        _this.close = _this.close.bind(_this);
-	        _this.componentWillReceiveProps = _this.componentWillReceiveProps.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(LoadingTimer, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(props) {
-	            if (props.shToggleSpinner) {
-	                this.open();
-	            }
-	
-	            if (!props.shToggleSpinner) {
-	                this.close();
-	            }
-	        }
-	    }, {
-	        key: 'open',
-	        value: function open() {
-	            var timer = 3000;
-	            this.timeNow = Date.now();
-	
-	            if (typeof Storage !== 'undefined') {
-	                if (localStorage.getItem('timer') === null) {
-	                    localStorage.setItem('timer', timer);
-	                } else {
-	                    timer = localStorage.getItem('timer');
-	                }
-	            } else {
-	                console.error('storage unusable no load times will be saved');
-	            }
-	
-	            this.setState({ show: true });
-	        }
-	    }, {
-	        key: 'close',
-	        value: function close() {
-	            var _this2 = this;
-	
-	            this.setState({
-	                closing: true
-	            }, function () {
-	                setTimeout(function () {
-	                    _this2.timeDiff = Date.now() - _this2.timeNow;
-	                    if (typeof Storage !== 'undefined') {
-	                        localStorage.setItem('timer', _this2.timeDiff);
-	                    } else {
-	                        console.error('storage unusable no load times will be saved');
-	                    }
-	
-	                    _this2.setState({
-	                        show: false,
-	                        timer: _this2.timeDiff
-	                    });
-	                }, 500);
-	            });
-	        }
-	    }, {
-	        key: 'spinner',
-	        value: function spinner() {
-	            if (this.state.show) {
-	                return _react2.default.createElement(_shSpinner2.default, { shLabel: this.props.shLabel, shTimer: this.state.timer, shClosing: this.state.closing });
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: this.props.shClass + ' sh-loader' },
-	                this.spinner()
-	            );
-	        }
-	    }]);
-	
-	    return LoadingTimer;
-	}(_react2.default.Component);
-	
-	LoadingTimer.propTypes = {
-	    shLabel: _react2.default.PropTypes.string,
-	    shClass: _react2.default.PropTypes.string,
-	    shToggleSpinner: _react2.default.PropTypes.bool,
-	    shComponentName: _react2.default.PropTypes.string
-	};
-	
-	exports.default = LoadingTimer;
-
-/***/ },
+/* 178 */,
 /* 179 */
 /*!****************************!*\
   !*** ./~/lodash/lodash.js ***!
@@ -39692,15 +39556,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _lodash = __webpack_require__(/*! lodash */ 179);
+	__webpack_require__(/*! ./sh-spinner.scss */ 181);
 	
-	var _ = _interopRequireWildcard(_lodash);
+	var _shSpinnerSvg = __webpack_require__(/*! ./sh-spinner-svg */ 187);
 	
-	var _shCore = __webpack_require__(/*! sh-core */ 186);
-	
-	var _shCore2 = _interopRequireDefault(_shCore);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _shSpinnerSvg2 = _interopRequireDefault(_shSpinnerSvg);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -39710,174 +39570,108 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var ShSpinner = function (_React$Component) {
-	    _inherits(ShSpinner, _React$Component);
+	var LoadingTimer = function (_React$Component) {
+	    _inherits(LoadingTimer, _React$Component);
 	
-	    function ShSpinner(props) {
-	        _classCallCheck(this, ShSpinner);
+	    function LoadingTimer(props) {
+	        _classCallCheck(this, LoadingTimer);
 	
-	        var _this = _possibleConstructorReturn(this, (ShSpinner.__proto__ || Object.getPrototypeOf(ShSpinner)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (LoadingTimer.__proto__ || Object.getPrototypeOf(LoadingTimer)).call(this, props));
 	
-	        _this.size = 100;
-	
+	        _this.timeDiff = null;
+	        _this.timeNow = null;
 	        _this.state = {
-	            timer: _this.props.shTimer,
-	            classList: {
-	                shLoaderSvgs: true,
-	                shFadeIn: false
-	            }
+	            show: false,
+	            timer: 3000,
+	            closing: false
 	        };
 	
-	        _this.componentDidMount = _this.componentDidMount.bind(_this);
-	        _this.startLoading = _this.startLoading.bind(_this);
+	        _this.open = _this.open.bind(_this);
+	        _this.close = _this.close.bind(_this);
+	        _this.componentWillReceiveProps = _this.componentWillReceiveProps.bind(_this);
 	        return _this;
 	    }
 	
-	    _createClass(ShSpinner, [{
+	    _createClass(LoadingTimer, [{
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(props) {
-	            if (props.shTimer != this.state.timer) {
-	                this.setState({
-	                    timer: props.shTimer
-	                });
+	            if (props.shToggleSpinner) {
+	                this.open();
 	            }
 	
-	            if (props.shClosing) {
-	                this.setState({
-	                    classList: {
-	                        shLoaderSvgs: true,
-	                        shFadeIn: false
-	                    }
-	                });
+	            if (!props.shToggleSpinner) {
+	                this.close();
 	            }
 	        }
 	    }, {
-	        key: 'startLoading',
-	        value: function startLoading(size) {
+	        key: 'open',
+	        value: function open() {
+	            var timer = 3000;
+	            this.timeNow = Date.now();
+	
+	            if (typeof Storage !== 'undefined') {
+	                if (localStorage.getItem('timer') === null) {
+	                    localStorage.setItem('timer', timer);
+	                } else {
+	                    timer = localStorage.getItem('timer');
+	                }
+	            } else {
+	                console.error('storage unusable no load times will be saved');
+	            }
+	            this.setState({ show: true });
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
 	            var _this2 = this;
 	
-	            var netSize = size - 10;
-	            var half = netSize / 2;
-	            var svg = void 0;
-	            var path = void 0;
-	            var runCount = 0;
-	            var setupSvg = function setupSvg() {
-	                return Promise.resolve().then(function () {
-	                    var bck = _this2.refs.shLoaderBck;
-	                    var crcx = size / 2;
-	                    var r = size / 2 - 5;
-	
-	                    bck.setAttribute('cx', crcx);
-	                    bck.setAttribute('cy', crcx);
-	                    bck.setAttribute('r', r);
-	
-	                    svg = _this2.refs.svg;
-	                    path = _this2.refs.shLoaderPath;
-	                    svg.setAttribute('size', size);
-	                    svg.setAttribute('height', size);
-	                    svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
-	                    path.setAttribute('transform', 'translate(' + size / 2 + ',' + size / 2 + ')');
-	                    path.setAttribute('stroke', '#3AB676');
-	                    return path;
-	                });
-	            };
-	
-	            setupSvg().then(function (path) {
-	                var loader = path,
-	                    start = 0,
-	                    pie = Math.PI,
-	                    speed = _this2.props.shTimer / 360;
-	
-	                var draw = function draw() {
-	                    start++;
-	                    if (start % 360 === 359) {
-	                        runCount++;
+	            this.setState({
+	                closing: true
+	            }, function () {
+	                setTimeout(function () {
+	                    _this2.timeDiff = Date.now() - _this2.timeNow;
+	                    if (typeof Storage !== 'undefined') {
+	                        localStorage.setItem('timer', _this2.timeDiff);
+	                    } else {
+	                        console.error('storage unusable no load times will be saved');
 	                    }
 	
-	                    if (runCount === 1) {
-	                        path.setAttribute('stroke', '#E78F2B');
-	                    }
-	                    if (runCount >= 2) {
-	                        path.setAttribute('stroke', '#B25245');
-	                    }
-	
-	                    start %= 360;
-	                    var r = start * pie / 180,
-	                        x = Math.sin(r) * half + ' ',
-	                        y = Math.cos(r) * -half + ' ',
-	                        M = 'M',
-	                        GoTo = '0 ' + -half + ' ',
-	                        A = 'A ',
-	                        xRadius = half + ' ',
-	                        yRadius = half + ' ',
-	                        xAxsisRotation = '1 ',
-	                        sweep = '1 ',
-	                        largeArcSweep = start > 180 ? 1 : 0 + ' ',
-	                        ArcOne = A + xRadius + yRadius + xAxsisRotation + largeArcSweep + sweep + x + y;
-	
-	                    var d = M + GoTo + ArcOne;
-	
-	                    loader.setAttribute('d', d);
-	                    setTimeout(draw, speed); // Redraw
-	                };
-	
-	                draw();
+	                    _this2.setState({
+	                        show: false,
+	                        timer: _this2.timeDiff
+	                    });
+	                }, 500);
 	            });
 	        }
 	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
-	
-	            var box = this.refs.shLoader.getBoundingClientRect();
-	            this.size = _.min([box.height, box.width]);
-	            this.startLoading(this.size);
-	
-	            setTimeout(function () {
-	                _this3.setState({
-	                    classList: {
-	                        shLoaderSvgs: true,
-	                        shFadeIn: true
-	                    }
-	                });
-	            }, 100);
+	        key: 'spinner',
+	        value: function spinner() {
+	            if (this.state.show) {
+	                return _react2.default.createElement(_shSpinnerSvg2.default, { shLabel: this.props.shLabel, shTimer: this.state.timer, shClosing: this.state.closing });
+	            }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { ref: 'shLoader', className: _shCore2.default.getClassNames(this.state.classList) },
-	                _react2.default.createElement(
-	                    'svg',
-	                    { ref: 'svg', className: 'sh-loader-svg' },
-	                    _react2.default.createElement('path', { ref: 'shLoaderPath', className: 'sh-loader-path' }),
-	                    _react2.default.createElement('circle', { ref: 'shLoaderBck', cx: '100', cy: '100', r: '100', className: 'sh-loader-bck' })
-	                ),
-	                _react2.default.createElement('svg', { ref: 'svgBck', className: 'sh-loader-svg' }),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'sh-loader-text' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'sh-label' },
-	                        this.props.shLabel
-	                    )
-	                )
+	                { className: this.props.shClass + ' sh-loader' },
+	                this.spinner()
 	            );
 	        }
 	    }]);
 	
-	    return ShSpinner;
+	    return LoadingTimer;
 	}(_react2.default.Component);
 	
-	ShSpinner.propTypes = {
+	LoadingTimer.propTypes = {
 	    shLabel: _react2.default.PropTypes.string,
-	    shTimer: _react2.default.PropTypes.number,
-	    shSuccess: _react2.default.PropTypes.func
+	    shClass: _react2.default.PropTypes.string,
+	    shToggleSpinner: _react2.default.PropTypes.bool,
+	    shComponentName: _react2.default.PropTypes.string
 	};
 	
-	exports.default = ShSpinner;
+	exports.default = LoadingTimer;
 
 /***/ },
 /* 186 */
@@ -40095,6 +39889,212 @@
 	});
 	;
 	//# sourceMappingURL=sh-core.js.map
+
+/***/ },
+/* 187 */
+/*!*******************************!*\
+  !*** ./src/sh-spinner-svg.js ***!
+  \*******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _lodash = __webpack_require__(/*! lodash */ 179);
+	
+	var _ = _interopRequireWildcard(_lodash);
+	
+	var _shCore = __webpack_require__(/*! sh-core */ 186);
+	
+	var _shCore2 = _interopRequireDefault(_shCore);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ShSpinner = function (_React$Component) {
+	    _inherits(ShSpinner, _React$Component);
+	
+	    function ShSpinner(props) {
+	        _classCallCheck(this, ShSpinner);
+	
+	        var _this = _possibleConstructorReturn(this, (ShSpinner.__proto__ || Object.getPrototypeOf(ShSpinner)).call(this, props));
+	
+	        _this.size = 100;
+	
+	        _this.state = {
+	            timer: _this.props.shTimer,
+	            classList: {
+	                shLoaderSvgs: true,
+	                shFadeIn: false
+	            }
+	        };
+	
+	        _this.componentDidMount = _this.componentDidMount.bind(_this);
+	        _this.startLoading = _this.startLoading.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(ShSpinner, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(props) {
+	            if (props.shTimer != this.state.timer) {
+	                this.setState({
+	                    timer: props.shTimer
+	                });
+	            }
+	
+	            if (props.shClosing) {
+	                this.setState({
+	                    classList: {
+	                        shLoaderSvgs: true,
+	                        shFadeIn: false
+	                    }
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'startLoading',
+	        value: function startLoading(size) {
+	            var _this2 = this;
+	
+	            var netSize = size - 10;
+	            var half = netSize / 2;
+	            var svg = void 0;
+	            var path = void 0;
+	            var runCount = 0;
+	            var setupSvg = function setupSvg() {
+	                return Promise.resolve().then(function () {
+	                    var bck = _this2.refs.shLoaderBck;
+	                    var crcx = size / 2;
+	                    var r = size / 2 - 5;
+	
+	                    bck.setAttribute('cx', crcx);
+	                    bck.setAttribute('cy', crcx);
+	                    bck.setAttribute('r', r);
+	
+	                    svg = _this2.refs.svg;
+	                    path = _this2.refs.shLoaderPath;
+	                    svg.setAttribute('size', size);
+	                    svg.setAttribute('height', size);
+	                    svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+	                    path.setAttribute('transform', 'translate(' + size / 2 + ',' + size / 2 + ')');
+	                    path.setAttribute('stroke', '#3AB676');
+	                    return path;
+	                });
+	            };
+	
+	            setupSvg().then(function (path) {
+	                var loader = path,
+	                    start = 0,
+	                    pie = Math.PI,
+	                    speed = _this2.props.shTimer / 360;
+	
+	                var draw = function draw() {
+	                    start++;
+	                    if (start % 360 === 359) {
+	                        runCount++;
+	                    }
+	
+	                    if (runCount === 1) {
+	                        path.setAttribute('stroke', '#E78F2B');
+	                    }
+	                    if (runCount >= 2) {
+	                        path.setAttribute('stroke', '#B25245');
+	                    }
+	
+	                    start %= 360;
+	                    var r = start * pie / 180,
+	                        x = Math.sin(r) * half + ' ',
+	                        y = Math.cos(r) * -half + ' ',
+	                        M = 'M',
+	                        GoTo = '0 ' + -half + ' ',
+	                        A = 'A ',
+	                        xRadius = half + ' ',
+	                        yRadius = half + ' ',
+	                        xAxsisRotation = '1 ',
+	                        sweep = '1 ',
+	                        largeArcSweep = start > 180 ? 1 : 0 + ' ',
+	                        ArcOne = A + xRadius + yRadius + xAxsisRotation + largeArcSweep + sweep + x + y;
+	
+	                    var d = M + GoTo + ArcOne;
+	
+	                    loader.setAttribute('d', d);
+	                    setTimeout(draw, speed); // Redraw
+	                };
+	
+	                draw();
+	            });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this3 = this;
+	
+	            var box = this.refs.shLoader.getBoundingClientRect();
+	            this.size = _.min([box.height, box.width]);
+	            this.startLoading(this.size);
+	
+	            setTimeout(function () {
+	                _this3.setState({
+	                    classList: {
+	                        shLoaderSvgs: true,
+	                        shFadeIn: true
+	                    }
+	                });
+	            }, 100);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { ref: 'shLoader', className: _shCore2.default.getClassNames(this.state.classList) },
+	                _react2.default.createElement(
+	                    'svg',
+	                    { ref: 'svg', className: 'sh-loader-svg' },
+	                    _react2.default.createElement('path', { ref: 'shLoaderPath', className: 'sh-loader-path' }),
+	                    _react2.default.createElement('circle', { ref: 'shLoaderBck', cx: '100', cy: '100', r: '100', className: 'sh-loader-bck' })
+	                ),
+	                _react2.default.createElement('svg', { ref: 'svgBck', className: 'sh-loader-svg' }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'sh-loader-text' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'sh-label' },
+	                        this.props.shLabel
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return ShSpinner;
+	}(_react2.default.Component);
+	
+	ShSpinner.propTypes = {
+	    shLabel: _react2.default.PropTypes.string,
+	    shTimer: _react2.default.PropTypes.number,
+	    shSuccess: _react2.default.PropTypes.func
+	};
+	
+	exports.default = ShSpinner;
 
 /***/ }
 /******/ ]);
