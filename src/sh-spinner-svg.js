@@ -8,6 +8,10 @@ class ShSpinner extends React.Component {
         this.size = 100;
 
         this.state = {
+            boxSize: {
+                width: this.size,
+                height: this.size
+            },
             timer: this.props.shTimer,
             classList: {
                 shLoaderSvgs: true,
@@ -109,6 +113,13 @@ class ShSpinner extends React.Component {
     componentDidMount() {
         let box = this.refs.shLoader.getBoundingClientRect();
         this.size = _.min([box.height, box.width]);
+        this.setState({
+            boxSize: {
+                width: this.size,
+                height: this.size
+            }
+        });
+
         this.startLoading(this.size);
 
         setTimeout(() => {
@@ -123,7 +134,7 @@ class ShSpinner extends React.Component {
 
     render() {
         return (
-            <div ref="shLoader" className={ShCore.getClassNames(this.state.classList)}>
+            <div ref="shLoader" className={ShCore.getClassNames(this.state.classList)} >
                 <svg ref="svg" className="sh-loader-svg">
                     <path ref='shLoaderPath' className="sh-loader-path"/>
                     <circle ref='shLoaderBck' cx="100" cy="100" r="100" className="sh-loader-bck"/>
@@ -131,7 +142,7 @@ class ShSpinner extends React.Component {
                 <svg ref="svgBck" className="sh-loader-svg">
 
                 </svg>
-                <div className="sh-loader-text">
+                <div className="sh-loader-text" style={this.state.boxSize}>
                     <div className="sh-label">{this.props.shLabel}</div>
                 </div>
             </div>

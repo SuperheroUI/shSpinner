@@ -22613,6 +22613,10 @@
 	        _this.size = 100;
 	
 	        _this.state = {
+	            boxSize: {
+	                width: _this.size,
+	                height: _this.size
+	            },
 	            timer: _this.props.shTimer,
 	            classList: {
 	                shLoaderSvgs: true,
@@ -22723,6 +22727,13 @@
 	
 	            var box = this.refs.shLoader.getBoundingClientRect();
 	            this.size = _.min([box.height, box.width]);
+	            this.setState({
+	                boxSize: {
+	                    width: this.size,
+	                    height: this.size
+	                }
+	            });
+	
 	            this.startLoading(this.size);
 	
 	            setTimeout(function () {
@@ -22749,7 +22760,7 @@
 	                _react2.default.createElement('svg', { ref: 'svgBck', className: 'sh-loader-svg' }),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'sh-loader-text' },
+	                    { className: 'sh-loader-text', style: this.state.boxSize },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'sh-label' },
