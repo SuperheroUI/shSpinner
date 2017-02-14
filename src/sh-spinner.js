@@ -20,28 +20,25 @@ class LoadingTimer extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        if (props.shToggleSpinner) {
-            this.open();
-        }
-
         if (!props.shToggleSpinner) {
             this.close();
         }
-
-        if(props.shKey !== this.state.key){
-            this.setState({
-                key: props.shKey
-            })
-        }
+        this.setState({
+            key: props.shKey
+        }, () => {
+            if (props.shToggleSpinner) {
+                this.open(props.shKey);
+            }
+        })
     }
 
-    open() {
+    open(key) {
         let timer = 3000;
         this.timeNow = Date.now();
 
         if (typeof(Storage) !== 'undefined') {
-            if (localStorage.getItem(this.state.key) === null) {
-                localStorage.setItem(this.state.key, timer);
+            if (localStorage.getItem(key) === null) {
+                localStorage.setItem(key, timer);
             } else {
                 timer = localStorage.getItem('timer');
             }
@@ -73,7 +70,8 @@ class LoadingTimer extends React.Component {
 
     spinner() {
         if (this.state.show) {
-            return <ShSpinnerSVG shLabel={this.props.shLabel} shTimer={this.state.timer} shClosing={this.state.closing}/>
+            return <ShSpinnerSVG shLabel={this.props.shLabel} shTimer={this.state.timer}
+                                 shClosing={this.state.closing}/>
         }
     }
 
@@ -96,7 +94,8 @@ LoadingTimer.propTypes = {
 
 LoadingTimer.defaultProps = {
     shKey: 'sh-timer',
-    shLabel: 'Loading...',
+    shClass: '',
+    shLabel: 'Loading...'
 };
 
 export default LoadingTimer;
