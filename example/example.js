@@ -22122,29 +22122,28 @@
 	    _createClass(LoadingTimer, [{
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(props) {
-	            if (props.shToggleSpinner) {
-	                this.open();
-	            }
+	            var _this2 = this;
 	
 	            if (!props.shToggleSpinner) {
 	                this.close();
 	            }
-	
-	            if (props.shKey !== this.state.key) {
-	                this.setState({
-	                    key: props.shKey
-	                });
-	            }
+	            this.setState({
+	                key: props.shKey
+	            }, function () {
+	                if (props.shToggleSpinner) {
+	                    _this2.open(props.shKey);
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'open',
-	        value: function open() {
+	        value: function open(key) {
 	            var timer = 3000;
 	            this.timeNow = Date.now();
 	
 	            if (typeof Storage !== 'undefined') {
-	                if (localStorage.getItem(this.state.key) === null) {
-	                    localStorage.setItem(this.state.key, timer);
+	                if (localStorage.getItem(key) === null) {
+	                    localStorage.setItem(key, timer);
 	                } else {
 	                    timer = localStorage.getItem('timer');
 	                }
@@ -22156,22 +22155,22 @@
 	    }, {
 	        key: 'close',
 	        value: function close() {
-	            var _this2 = this;
+	            var _this3 = this;
 	
 	            this.setState({
 	                closing: true
 	            }, function () {
 	                setTimeout(function () {
-	                    _this2.timeDiff = Date.now() - _this2.timeNow;
+	                    _this3.timeDiff = Date.now() - _this3.timeNow;
 	                    if (typeof Storage !== 'undefined') {
-	                        localStorage.setItem(_this2.state.key, _this2.timeDiff);
+	                        localStorage.setItem(_this3.state.key, _this3.timeDiff);
 	                    } else {
 	                        console.error('storage unusable no load times will be saved');
 	                    }
 	
-	                    _this2.setState({
+	                    _this3.setState({
 	                        show: false,
-	                        timer: _this2.timeDiff
+	                        timer: _this3.timeDiff
 	                    });
 	                }, 500);
 	            });
@@ -22180,7 +22179,8 @@
 	        key: 'spinner',
 	        value: function spinner() {
 	            if (this.state.show) {
-	                return _react2.default.createElement(_shSpinnerSvg2.default, { shLabel: this.props.shLabel, shTimer: this.state.timer, shClosing: this.state.closing });
+	                return _react2.default.createElement(_shSpinnerSvg2.default, { shLabel: this.props.shLabel, shTimer: this.state.timer,
+	                    shClosing: this.state.closing });
 	            }
 	        }
 	    }, {
@@ -22207,6 +22207,7 @@
 	
 	LoadingTimer.defaultProps = {
 	    shKey: 'sh-timer',
+	    shClass: '',
 	    shLabel: 'Loading...'
 	};
 	
@@ -22253,7 +22254,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".sh-loader {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  opacity: 1; }\n  .sh-loader .sh-loader-svg {\n    display: block; }\n  .sh-loader .sh-loader-path {\n    stroke-opacity: 1;\n    stroke-width: 5px;\n    fill: none; }\n  .sh-loader .sh-loader-bck {\n    stroke: rgba(255, 255, 255, 0.1);\n    stroke-width: 5px;\n    fill: none; }\n  .sh-loader .sh-loader-svgs {\n    width: 100%;\n    height: 100%;\n    opacity: 0;\n    transition: opacity 0.5s ease-in-out; }\n    .sh-loader .sh-loader-svgs.sh-fade-in {\n      opacity: 1;\n      transition: opacity 0.5s ease-in-out; }\n    .sh-loader .sh-loader-svgs .sh-loader-text {\n      display: flex;\n      width: 100%;\n      height: 100%;\n      position: absolute;\n      color: white;\n      top: 0;\n      justify-content: center;\n      align-items: center; }\n      .sh-loader .sh-loader-svgs .sh-loader-text .sh-label {\n        font-family: \"Roboto\", \"Open Sans\";\n        text-align: center;\n        font-weight: 100;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis; }\n", ""]);
+	exports.push([module.id, ".sh-loader {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  opacity: 1; }\n  .sh-loader .sh-loader-svg {\n    display: block; }\n  .sh-loader .sh-loader-path {\n    stroke-opacity: 1;\n    stroke-width: 5px;\n    fill: none; }\n  .sh-loader .sh-loader-bck {\n    stroke: rgba(0, 0, 0, 0.1);\n    stroke-width: 5px;\n    fill: none; }\n  .sh-loader .sh-loader-svgs {\n    width: 100%;\n    height: 100%;\n    opacity: 0;\n    transition: opacity 0.5s ease-in-out; }\n    .sh-loader .sh-loader-svgs.sh-fade-in {\n      opacity: 1;\n      transition: opacity 0.5s ease-in-out; }\n    .sh-loader .sh-loader-svgs .sh-loader-text {\n      display: flex;\n      width: 100%;\n      height: 100%;\n      position: absolute;\n      color: white;\n      top: 0;\n      justify-content: center;\n      align-items: center; }\n      .sh-loader .sh-loader-svgs .sh-loader-text .sh-label {\n        color: #3ab676;\n        font-family: \"Roboto\", \"Open Sans\";\n        text-align: center;\n        font-weight: 100;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis; }\n", ""]);
 	
 	// exports
 
