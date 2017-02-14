@@ -40,12 +40,15 @@ class LoadingTimer extends React.Component {
             if (localStorage.getItem(key) === null) {
                 localStorage.setItem(key, timer);
             } else {
-                timer = localStorage.getItem('timer');
+                this.setState({
+                    timer: localStorage.getItem(key)
+                }, () => {
+                    this.setState({show: true})
+                })
             }
         } else {
             console.error('storage unusable no load times will be saved')
         }
-        this.setState({show: true})
     }
 
     close() {

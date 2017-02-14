@@ -22138,6 +22138,8 @@
 	    }, {
 	        key: 'open',
 	        value: function open(key) {
+	            var _this3 = this;
+	
 	            var timer = 3000;
 	            this.timeNow = Date.now();
 	
@@ -22145,32 +22147,35 @@
 	                if (localStorage.getItem(key) === null) {
 	                    localStorage.setItem(key, timer);
 	                } else {
-	                    timer = localStorage.getItem('timer');
+	                    this.setState({
+	                        timer: localStorage.getItem(key)
+	                    }, function () {
+	                        _this3.setState({ show: true });
+	                    });
 	                }
 	            } else {
 	                console.error('storage unusable no load times will be saved');
 	            }
-	            this.setState({ show: true });
 	        }
 	    }, {
 	        key: 'close',
 	        value: function close() {
-	            var _this3 = this;
+	            var _this4 = this;
 	
 	            this.setState({
 	                closing: true
 	            }, function () {
 	                setTimeout(function () {
-	                    _this3.timeDiff = Date.now() - _this3.timeNow;
+	                    _this4.timeDiff = Date.now() - _this4.timeNow;
 	                    if (typeof Storage !== 'undefined') {
-	                        localStorage.setItem(_this3.state.key, _this3.timeDiff);
+	                        localStorage.setItem(_this4.state.key, _this4.timeDiff);
 	                    } else {
 	                        console.error('storage unusable no load times will be saved');
 	                    }
 	
-	                    _this3.setState({
+	                    _this4.setState({
 	                        show: false,
-	                        timer: _this3.timeDiff
+	                        timer: _this4.timeDiff
 	                    });
 	                }, 500);
 	            });
