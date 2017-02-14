@@ -10,7 +10,8 @@ class LoadingTimer extends React.Component {
         this.state = {
             show: false,
             timer: 3000,
-            closing: false
+            closing: false,
+            key: props.shKey
         };
 
         this.open = this.open.bind(this);
@@ -26,6 +27,12 @@ class LoadingTimer extends React.Component {
         if (!props.shToggleSpinner) {
             this.close();
         }
+
+        if(props.shKey !== this.state.key){
+            this.setState({
+                key: props.shKey
+            })
+        }
     }
 
     open() {
@@ -33,8 +40,8 @@ class LoadingTimer extends React.Component {
         this.timeNow = Date.now();
 
         if (typeof(Storage) !== 'undefined') {
-            if (localStorage.getItem(this.props.shKey) === null) {
-                localStorage.setItem(this.props.shKey, timer);
+            if (localStorage.getItem(this.state.key) === null) {
+                localStorage.setItem(this.state.key, timer);
             } else {
                 timer = localStorage.getItem('timer');
             }
@@ -51,7 +58,7 @@ class LoadingTimer extends React.Component {
             setTimeout(() => {
                 this.timeDiff = Date.now() - this.timeNow;
                 if (typeof(Storage) !== 'undefined') {
-                    localStorage.setItem(this.props.shKey, this.timeDiff);
+                    localStorage.setItem(this.state.key, this.timeDiff);
                 } else {
                     console.error('storage unusable no load times will be saved')
                 }

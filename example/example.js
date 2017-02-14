@@ -22109,7 +22109,8 @@
 	        _this.state = {
 	            show: false,
 	            timer: 3000,
-	            closing: false
+	            closing: false,
+	            key: props.shKey
 	        };
 	
 	        _this.open = _this.open.bind(_this);
@@ -22128,6 +22129,12 @@
 	            if (!props.shToggleSpinner) {
 	                this.close();
 	            }
+	
+	            if (props.shKey !== this.state.key) {
+	                this.setState({
+	                    key: props.shKey
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'open',
@@ -22136,8 +22143,8 @@
 	            this.timeNow = Date.now();
 	
 	            if (typeof Storage !== 'undefined') {
-	                if (localStorage.getItem(this.props.shKey) === null) {
-	                    localStorage.setItem(this.props.shKey, timer);
+	                if (localStorage.getItem(this.state.key) === null) {
+	                    localStorage.setItem(this.state.key, timer);
 	                } else {
 	                    timer = localStorage.getItem('timer');
 	                }
@@ -22157,7 +22164,7 @@
 	                setTimeout(function () {
 	                    _this2.timeDiff = Date.now() - _this2.timeNow;
 	                    if (typeof Storage !== 'undefined') {
-	                        localStorage.setItem(_this2.props.shKey, _this2.timeDiff);
+	                        localStorage.setItem(_this2.state.key, _this2.timeDiff);
 	                    } else {
 	                        console.error('storage unusable no load times will be saved');
 	                    }
