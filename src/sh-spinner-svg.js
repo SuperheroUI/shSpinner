@@ -152,7 +152,7 @@ class ShSpinner extends React.Component {
 
 ShSpinner.propTypes = {
     shLabel: React.PropTypes.string,
-    shTimer: React.PropTypes.number,
+    shTimer: React.PropTypes.any,
     shSuccess: React.PropTypes.func,
 };
 
