@@ -35,19 +35,22 @@ class LoadingTimer extends React.Component {
     open(key) {
         let timer = 3000;
         this.timeNow = Date.now();
-
-        if (typeof(Storage) !== 'undefined') {
-            if (localStorage.getItem(key) === null) {
-                localStorage.setItem(key, timer);
+        try {
+            if (typeof(Storage) !== 'undefined') {
+                if (localStorage.getItem(key) === null) {
+                    localStorage.setItem(key, timer);
+                } else {
+                    this.setState({
+                        timer: localStorage.getItem(key)
+                    }, () => {
+                        this.setState({show: true})
+                    })
+                }
             } else {
-                this.setState({
-                    timer: localStorage.getItem(key)
-                }, () => {
-                    this.setState({show: true})
-                })
+                console.error('storage unusable no load times will be saved')
             }
-        } else {
-            console.error('storage unusable no load times will be saved')
+        } catch (e) {
+            // There was a problem using localStorage, so we won't save load times
         }
     }
 
@@ -57,10 +60,14 @@ class LoadingTimer extends React.Component {
         }, () => {
             setTimeout(() => {
                 this.timeDiff = Date.now() - this.timeNow;
-                if (typeof(Storage) !== 'undefined') {
-                    localStorage.setItem(this.state.key, this.timeDiff);
-                } else {
-                    console.error('storage unusable no load times will be saved')
+                try {
+                    if (typeof(Storage) !== 'undefined') {
+                        localStorage.setItem(this.state.key, this.timeDiff);
+                    } else {
+                        console.error('storage unusable no load times will be saved')
+                    }
+                } catch (e) {
+                    // There was a problem using localStorage, so we won't save load times
                 }
 
                 this.setState({

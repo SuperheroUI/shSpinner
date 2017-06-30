@@ -1,6 +1,6 @@
 {
   "name": "sh-spinner",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Loading spinner",
   "main": "./bin/sh-spinner.js",
   "scripts": {
