@@ -8,7 +8,7 @@ class LoadingTimer extends React.Component {
         this.timeDiff = null;
         this.timeNow = null;
         this.state = {
-            show: false,
+            show: true,
             timer: 3000,
             closing: false,
             key: props.shKey
