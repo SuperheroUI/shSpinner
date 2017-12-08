@@ -107,7 +107,7 @@ class ShSpinner extends React.Component {
             };
 
             draw()
-        })
+        }).catch(() => {})
     }
 
     componentDidMount() {
